@@ -1,23 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import React from "react";
+import {useState, useEffect} from "react";
+import ShiritoriBoard from "./components/ShiritoriBoard";
+import InputForm from "./components/InputForm";
 
 function App() {
+
+  const [shiritori, setShiritori] = useState([]);
+  const [name, setName] = useState("");
+
+  const handleAddWord = (word, name) => {
+    setShiritori([...shiritori, word]);
+    setName(name);
+  };
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ShiritoriBoard shiritori={shiritori} name={name}/>
+      <InputForm onAddWord={handleAddWord} />
     </div>
   );
 }
