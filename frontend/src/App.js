@@ -7,17 +7,19 @@ import InputForm from "./components/InputForm";
 function App() {
 
   const [shiritori, setShiritori] = useState([]);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(localStorage.getItem("userName") || "");
 
   const handleAddWord = (word, name) => {
     setShiritori([...shiritori, word]);
     setName(name);
   };
+
+  
   
   return (
     <div className="App">
-      <ShiritoriBoard shiritori={shiritori} name={name}/>
-      <InputForm onAddWord={handleAddWord} />
+      <ShiritoriBoard shiritori={shiritori} name={name} />
+      <InputForm onAddWord={handleAddWord} storedName={storedName} />
     </div>
   );
 }

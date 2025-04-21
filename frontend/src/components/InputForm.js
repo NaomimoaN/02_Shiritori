@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 
-function InputForm({ onAddWord }) {
-  const [name, setName] = useState("");
+function InputForm({ onAddWord, storedName }) {
+  const [name, setName] = useState(() => {
+    return localStorage.getItem("userName" || "");
+  });
   const [shiritoriWord, setShiritoriWord] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const onSubmitHundle = (e) => {
+  const onSubmitHandle = (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -20,28 +22,28 @@ function InputForm({ onAddWord }) {
     onAddWord(shiritoriWord, name);
 
     // 状態をリセット
-    setName("");
+    setName(name ? name : "");
     setShiritoriWord("");
-    setLoading(false)
+    setLoading(false);
   };
 
   return (
     <div>
-      <form onSubmit={onSubmitHundle}>
+      <form onSubmit={onSubmitHandle}>
         <label htmlFor="name">Your Name</label>
         <input
           type="text"
           id="name"
-          value={name}
+          value={name || ""} // null の場合は空文字列を使用
           onChange={(e) => setName(e.target.value)}
-          placeholder="Your Name"
+          placeholder={storedName ? storedName : "Your Name"}
         />
 
         <label htmlFor="shiritoriWord">Put Shiritori Word</label>
         <input
           type="text"
           id="shiritoriWord"
-          value={shiritoriWord}
+          value={shiritoriWord || ""} // null の場合は空文字列を使用
           onChange={(e) => setShiritoriWord(e.target.value)}
           placeholder="Word"
         />
