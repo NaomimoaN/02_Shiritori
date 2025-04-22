@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 
-function InputForm({ onAddWord, storedName }) {
-  const [name, setName] = useState(() => {
-    return localStorage.getItem("userName" || "");
-  });
+function InputForm({ onAddWord, onSetName }) {
   const [shiritoriWord, setShiritoriWord] = useState("");
+  const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -19,10 +17,11 @@ function InputForm({ onAddWord, storedName }) {
     }
 
     // 親コンポーネントに単語と名前を渡す
-    onAddWord(shiritoriWord, name);
+    onAddWord(shiritoriWord);
+    onSetName(name);
 
     // 状態をリセット
-    setName(name ? name : "");
+
     setShiritoriWord("");
     setLoading(false);
   };
@@ -36,7 +35,7 @@ function InputForm({ onAddWord, storedName }) {
           id="name"
           value={name || ""} // null の場合は空文字列を使用
           onChange={(e) => setName(e.target.value)}
-          placeholder={storedName ? storedName : "Your Name"}
+          placeholder={name ? name : "Your Name"}
         />
 
         <label htmlFor="shiritoriWord">Put Shiritori Word</label>
